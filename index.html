@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 2 - Despliegue Premium</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        /* Base y Fondo Animado Avanzado (Efecto Espacio Vacío/Cyberpunk) */
+        body {
+            background: radial-gradient(circle at center, #1a0b2e 0%, #05010d 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+            color: #fff;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Líneas de escaneo de fondo tipo monitor gamer antiguos */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 1;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* CONTENEDOR PRINCIPAL: Animación Try Hard (Corte de Energía + Caída) */
+        .form-container {
+            background: rgba(10, 5, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid #00f0ff;
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 550px;
+            z-index: 2;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), inset 0 0 15px rgba(0, 240, 255, 0.1);
+
+            /* Combinación de animaciones personalizadas de entrada */
+            animation: ultraEntrance 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+                neonGlow 4s ease-in-out infinite alternate;
+        }
+
+        /* Keyframe de la entrada agresiva */
+        @keyframes ultraEntrance {
+            0% {
+                transform: scale(0.3) rotate(-15deg) translateY(-500px);
+                opacity: 0;
+                filter: blur(20px) brightness(3);
+                border-color: #ff0055;
+            }
+
+            60% {
+                transform: scale(1.05) rotate(2deg) translateY(30px);
+                opacity: 1;
+                filter: blur(0px) brightness(1.5);
+                border-color: #ff0055;
+            }
+
+            85% {
+                transform: scale(0.98) rotate(-1deg) translateY(-10px);
+                border-color: #00f0ff;
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Fluctuación de color en el borde */
+        @keyframes neonGlow {
+            0% {
+                border-color: #00f0ff;
+                box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            }
+
+            50% {
+                border-color: #7000ff;
+                box-shadow: 0 0 40px rgba(112, 0, 255, 0.4);
+            }
+
+            100% {
+                border-color: #ff0055;
+                box-shadow: 0 0 30px rgba(255, 0, 85, 0.2);
+            }
+        }
+
+        /* TÍTULO GLITCH ANIMADO (Efecto sobrecargado) */
+        .glitch-title {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+            text-shadow: 2px 2px #ff0055, -2px -2px #00f0ff;
+            animation: glitchEffect 1s linear infinite alternate, fadeInDown 0.8s ease-out;
+            margin-bottom: 35px;
+        }
+
+        @keyframes glitchEffect {
+            0% {
+                text-shadow: 2px 2px #ff0055, -2px -2px #00f0ff;
+                transform: skewX(0deg);
+            }
+
+            20% {
+                text-shadow: -3px 1px #ff0055, 2px -3px #00f0ff;
+                transform: skewX(-2deg);
+            }
+
+            40% {
+                text-shadow: 1px -2px #ff0055, -1px 3px #00f0ff;
+                transform: skewX(1deg);
+            }
+
+            60% {
+                text-shadow: 3px 3px #ff0055, -3px -1px #00f0ff;
+                transform: skewX(-1deg);
+            }
+
+            80% {
+                text-shadow: -2px -2px #ff0055, 2px 2px #00f0ff;
+                transform: skewX(2deg);
+            }
+
+            100% {
+                text-shadow: 2px -1px #ff0055, -2px 3px #00f0ff;
+                transform: skewX(0deg);
+            }
+        }
+
+        /* Estilos de las Etiquetas */
+        .form-label {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #00f0ff;
+            transition: color 0.3s;
+        }
+
+        /* INPUTS ULTRA-RESPONSIVOS */
+        .form-control {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            color: #fff;
+            border-radius: 6px;
+            padding: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Cuando el usuario se posiciona sobre un campo */
+        .form-control:focus {
+            background: rgba(0, 240, 255, 0.08);
+            border-color: #ff0055;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4), inset 0 0 10px rgba(255, 0, 85, 0.2);
+            transform: scale(1.02) translateX(5px);
+        }
+
+        /* Animación secuencial para los grupos de campos */
+        .form-group-animated {
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .fg-1 {
+            animation-delay: 0.4s;
+        }
+
+        .fg-2 {
+            animation-delay: 0.5s;
+        }
+
+        .fg-3 {
+            animation-delay: 0.6s;
+        }
+
+        .fg-4 {
+            animation-delay: 0.7s;
+        }
+
+        .fg-5 {
+            animation-delay: 0.8s;
+        }
+
+        /* BOTÓN DE CONFIGURACIÓN AGRESIVA (Laser Scan + Hover Extremo) */
+        .btn-tryhard {
+            background: transparent;
+            border: 2px solid #ff0055;
+            color: #ff0055;
+            padding: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 6px;
+            width: 100%;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out 0.9s forwards;
+        }
+
+        /* Línea láser de escaneo continuo */
+        .btn-tryhard::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            height: 200%;
+            width: 30px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(30deg);
+            left: -40px;
+            animation: laserScan 3s infinite linear;
+        }
+
+        @keyframes laserScan {
+            0% {
+                left: -40px;
+            }
+
+            100% {
+                left: 110%;
+            }
+        }
+
+        /* Hover de fase crítica */
+        .btn-tryhard:hover {
+            background: #ff0055;
+            color: #fff;
+            box-shadow: 0 0 35px #ff0055, 0 0 10px #00f0ff;
+            transform: translateY(-3px) scale(1.02);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-tryhard:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+
+        <header class="text-center">
+            <h2 class="glitch-title">
+                GUSTOS APRENDIZ
+            </h2>
+        </header>
+
+        <form action="logica.php" method="post">
+
+            <div class="mb-3 form-group-animated fg-1">
+                <label for="inputApellidos" class="form-label">Apellidos</label>
+                <input type="text" required maxlength="200" name="apellidos" class="form-control" id="inputApellidos"
+                    placeholder=">> COMPLETA ESTE CAMPO">
+            </div>
+
+            <div class="mb-3 form-group-animated fg-2">
+                <label for="inputNombres" class="form-label">Nombres</label>
+                <input type="text" required maxlength="200" name="nombres" class="form-control" id="inputNombres"
+                    placeholder=">> COMPLETA ESTE CAMPO">
+            </div>
+
+            <div class="mb-3 form-group-animated fg-3">
+                <label for="inputColor" class="form-label">Color favorito</label>
+                <input type="text" required maxlength="200" name="color" class="form-control" id="inputColor"
+                    placeholder=">> ASIGNA UN COLOR">
+            </div>
+
+            <div class="mb-3 form-group-animated fg-4">
+                <label for="inputComida" class="form-label">Comida favorita</label>
+                <input type="text" required maxlength="200" name="comida" class="form-control" id="inputComida"
+                    placeholder=">> INDICA TU PREFERENCIA">
+            </div>
+
+            <div class="mb-3 form-group-animated fg-5">
+                <label for="inputPelicula" class="form-label">Tipo de literatura y cine</label>
+                <input type="text" required maxlength="200" name="pelicula" class="form-control" id="inputPelicula"
+                    placeholder=">> GÉNERO SELECCIONADO">
+            </div>
+
+            <button type="submit" class="btn btn-tryhard">
+                [ Inicializar Registro ]
+            </button>
+
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
