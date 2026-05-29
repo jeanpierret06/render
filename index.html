@@ -10,9 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <style>
-        /* Base y Fondo Animado Avanzado (Efecto Espacio Vacío/Cyberpunk) */
+        /* Base y Fondo de Seguridad */
         body {
-            background: radial-gradient(circle at center, #1a0b2e 0%, #05010d 100%);
+            background-color: #030108;
             overflow-x: hidden;
             min-height: 100vh;
             display: flex;
@@ -22,9 +22,21 @@
             color: #fff;
             padding: 20px;
             position: relative;
+            margin: 0;
         }
 
-        /* Líneas de escaneo de fondo tipo monitor gamer antiguos */
+        /* LIENZO DE ANIMACIÓN DIGITAL */
+        #cyber-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Líneas de escaneo retro */
         body::before {
             content: " ";
             display: block;
@@ -33,7 +45,7 @@
             left: 0;
             bottom: 0;
             right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
             z-index: 1;
             background-size: 100% 4px, 6px 100%;
             pointer-events: none;
@@ -41,9 +53,9 @@
 
         /* CONTENEDOR PRINCIPAL */
         .form-container {
-            background: rgba(10, 5, 20, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(8, 4, 18, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 2px solid #00f0ff;
             border-radius: 15px;
             padding: 40px;
@@ -51,7 +63,7 @@
             max-width: 550px;
             z-index: 2;
             position: relative;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2), inset 0 0 15px rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
             animation: ultraEntrance 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards, neonGlow 4s ease-in-out infinite alternate;
         }
 
@@ -89,7 +101,7 @@
 
             50% {
                 border-color: #7000ff;
-                box-shadow: 0 0 40px rgba(112, 0, 255, 0.4);
+                box-shadow: 0 0 40px rgba(112, 0, 255, 0.3);
             }
 
             100% {
@@ -194,7 +206,7 @@
             animation-delay: 0.9s;
         }
 
-        /* BOTÓN PRINCIPAL ACCIÓN (MAGENTA) */
+        /* BOTÓN PRINCIPAL (MAGENTA) */
         .btn-tryhard {
             background: transparent;
             border: 2px solid #ff0055;
@@ -241,7 +253,7 @@
             transform: translateY(-3px) scale(1.01);
         }
 
-        /* NUEVO BOTÓN CONSULTA DE LISTADOS (CIAN ULTRA) */
+        /* BOTÓN CONSULTA DE LISTADOS (CIAN ULTRA) */
         .btn-secondary-tryhard {
             display: block;
             text-align: center;
@@ -268,6 +280,33 @@
             font-weight: 800;
         }
 
+        /* BOTÓN PQRS (ESTILO AMARILLO NEÓN CYBERPUNK) */
+        .btn-pqrs-tryhard {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: rgba(255, 170, 0, 0.05);
+            border: 2px solid #ffaa00;
+            color: #ffaa00;
+            padding: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 6px;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.1);
+        }
+
+        .btn-pqrs-tryhard:hover {
+            background: #ffaa00;
+            color: #05010d;
+            box-shadow: 0 0 30px #ffaa00, inset 0 0 10px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            font-weight: 800;
+        }
+
         /* Separador Holográfico Decó */
         .tech-divider {
             height: 1px;
@@ -279,6 +318,8 @@
 </head>
 
 <body>
+
+    <canvas id="cyber-canvas"></canvas>
 
     <div class="form-container">
 
@@ -335,9 +376,79 @@
             </a>
         </div>
 
+        <div class="form-group-animated fg-6">
+            <a href="pqrs.php" class="btn btn-pqrs-tryhard">
+                🛠️ [ Radicar PQRS / Soporte ] 🛠️
+            </a>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const canvas = document.getElementById('cyber-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Configuración de las corrientes de datos del backend virtual
+        const columnCount = Math.floor(canvas.width / 20);
+        const streams = [];
+
+        for (let i = 0; i < columnCount; i++) {
+            streams.push({
+                x: i * 25 + Math.random() * 15,
+                y: Math.random() * canvas.height,
+                speed: 1.5 + Math.random() * 3,
+                length: 40 + Math.random() * 120,
+                color: Math.random() > 0.5 ? '#00f0ff' : '#ff0055'
+            });
+        }
+
+        function drawCyberBackground() {
+            // Capa de desvanecimiento sutil para dejar estela fluida
+            ctx.fillStyle = 'rgba(3, 1, 8, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Renderizado de ráfagas binarias verticales
+            for (let i = 0; i < streams.length; i++) {
+                const stream = streams[i];
+
+                // Dibujar línea de datos de alta velocidad
+                ctx.beginPath();
+                let gradient = ctx.createLinearGradient(stream.x, stream.y, stream.x, stream.y + stream.length);
+                gradient.addColorStop(0, 'transparent');
+                gradient.addColorStop(1, stream.color);
+
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 1.5;
+                ctx.moveTo(stream.x, stream.y);
+                ctx.lineTo(stream.x, stream.y + stream.length);
+                ctx.stroke();
+
+                // Actualizar posiciones físicas del hilo animado
+                stream.y += stream.speed;
+
+                // Reset de bucle infinito si sale de la matriz de pantalla
+                if (stream.y > canvas.height) {
+                    stream.y = -stream.length;
+                    stream.x = Math.random() * canvas.width;
+                    stream.speed = 1.5 + Math.random() * 3;
+                }
+            }
+
+            requestAnimationFrame(drawCyberBackground);
+        }
+
+        // Ejecutar bucle del render del sistema principal
+        drawCyberBackground();
+    </script>
 </body>
 
 </html>
