@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN update-ca-certificates
 
+# Instalar extensión nativa de MongoDB para PHP 8.2
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
 
@@ -18,8 +19,12 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 WORKDIR /var/www/html
 
+# Copiar los archivos del repositorio al contenedor
 COPY . .
 
-RUN composer install --ignore-platform-req=ext-mongodb
+# SOLUCIÓN DIRECTA EN LA NUBE: Borrar vendor o lock viejos que se hayan subido
+# y forzar a Composer a descargar la versión limpia y compatible con PHP 8.2
+RUN rm -rf vendor composer.lock \
+    && composer require mongodb/mongodb --no-interaction
 
 EXPOSE 80
