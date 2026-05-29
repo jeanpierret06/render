@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
 
 RUN update-ca-certificates
 
-# Aquí se instala la extensión nativa de PHP (Drivers C)
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
 
@@ -21,6 +20,6 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --ignore-platform-reqs
+RUN composer install --ignore-platform-req=ext-mongodb
 
 EXPOSE 80
