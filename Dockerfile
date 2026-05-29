@@ -21,7 +21,6 @@ WORKDIR /var/www/html
 
 COPY . .
 
-# CORRECCIÓN: Quitamos el ignore para que Composer instale la versión exacta compatible con el driver de arriba
-RUN composer install
+RUN composer install --ignore-platform-reqs
 
 EXPOSE 80
