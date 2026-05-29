@@ -7,7 +7,7 @@ $status_feedback = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 1. Coloca tu cadena de conexión real de Atlas aquí
-    $mongo_uri = "mongodb+srv://TU_USUARIO:TU_PASSWORD@TU_CLUSTER.mongodb.net/?retryWrites=true&w=majority";
+    $mongo_uri = "mongodb+srv://jeanpierret06:06092006@cluster0.ymxjlft.mongodb.net/?appName=Cluster0";
     
     try {
         $manager = new MongoDB\Driver\Manager($mongo_uri);
