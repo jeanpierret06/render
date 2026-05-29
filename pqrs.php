@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bulk->insert($documento);
         
         // 2. CAMBIA "EL_NOMBRE_DE_TU_BD_EXISTENTE" por el nombre real de tu base de datos
-        $manager->executeBulkWrite('form', $bulk);
+        $manager->executeBulkWrite('form.pqrs', $bulk);
         
         $status_feedback = "success";
         $mensaje_feedback = "⚡ [ RADICACIÓN EXITOSA ] -> TICKET ENVIADO AL CLUSTER ATLAS";
